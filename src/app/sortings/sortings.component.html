@@ -1,34 +1,23 @@
-<h2>This is dummy data {{dummyData}}</h2>
-
 <input type="number" [(ngModel)]="numElements"> enter the number of elements
-<h3>
-  Comparision {{comparision}}
-</h3>
-<button (click)="bubbleSort()" [disabled]="!show" >Sort</button>
-<div class="row">
-  <div class="col-md-3">
-    <!--<div style="overflow-y:scroll;">-->
-      <!--<div class="chart-wrapper" style="width:3000px; height: 300px">-->
-        <canvas baseChart
-                [datasets]="barChartData2"
-                [labels]="barChartLabels2"
-                [options]="barChartOptions2"
-                [plugins]="barChartPlugins2"
-                [legend]="barChartLegend2"
-                [chartType]="barChartType2">
+
+<div *ngIf="charData">
+  <button (click)="sort()" [disabled]="!(charData['bubble'].finished && charData['insertion'].finished)">Sort</button>
+  <div class="row">
+    <div class="col-md-3" *ngFor="let sorting of sortings">
+      <h3>
+        Comparision {{charData[sorting].comparisons}}
+      </h3>
+      <div>
+        <canvas width="100%" height="25%"
+                [datasets]="charData[sorting].dataSet"
+                [labels]="charData[sorting].labels"
+                [options]="charData[sorting].options"
+                [plugins]="charData[sorting].plugins"
+                [legend]="charData[sorting].legend"
+                [chartType]="charData[sorting].chartType"
+                baseChart>
         </canvas>
-      <!--</div>-->
-    <!--</div>-->
+      </div>
+    </div>
   </div>
 </div>
-<!--<div class="row" *ngIf="show">-->
-  <!--<div class="col-md-6" *ngFor="let sorting of sortings">-->
-    <!--<canvas [chartType]="barChartType"-->
-            <!--[datasets]="charData[sorting].data"-->
-            <!--[labels]="charData.labels"-->
-            <!--[legend]="barChartLegends"-->
-            <!--[options]="barChartOptions"-->
-            <!--baseChart style="width: 12px">-->
-    <!--</canvas>-->
-  <!--</div>-->
-<!--</div>-->

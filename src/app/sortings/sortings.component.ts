@@ -1,6 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import {ChartDataSets, ChartOptions, ChartType} from "chart.js";
-import {Label} from "ng2-charts";
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-sortings',
@@ -10,129 +8,185 @@ import {Label} from "ng2-charts";
 export class SortingsComponent implements OnInit {
 
 
+  sortings = ['bubble', 'insertion', 'quickSort'];
 
-  numElements = 1000;
+  charData = {};
+
+
+  numElements = 100;
   comparision = 0;
 
-  public barChartOptions2: ChartOptions = {
-    animation:{
-      duration: 0
-    },
-    scales: {
-      yAxes: [{
-        ticks: {
-          beginAtZero: true
-        }
-      }]
-    },
-    responsive: true,
-  };
-
-  someDumData = Array.from(Array(this.numElements).keys()).map(value => this.getRndInteger(0, 10000))
-  public barChartLabels2: Label[] = this.someDumData.map(value => " ");
-  // public barChartLabels2: Label[] = ['65', '59', '80', '81', '56', '55', '40'];
-  public barChartType2: ChartType = 'bar';
-  public barChartLegend2 = true;
-  public barChartPlugins2 = [];
-
-  // barChartData2: ChartDataSets[] = [
-  //   { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series B' }
-  // ];
+  someDumData = Array.from(Array(this.numElements).keys()).map(value => this.getRndInteger(0, 10000));
 
   show = true;
 
-  barChartData2: ChartDataSets[] = [
-    { data: this.someDumData.map(value => this.getRndInteger(0, 10000)), label: 'Series B' }
-  ];
-
   getRndInteger(min, max): number {
-    return Math.floor(Math.random() * (max - min + 1) ) + min;
+    return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
-  updateAll(){
-    if(this.numElements < 100 || this.numElements > 5001){
+
+  sort() {
+    this.updateAll();
+
+    this.charData['bubble'].finished = false;
+    this.charData['insertion'].finished = false;
+    this.sortings.forEach(key => {
+      if (key === 'bubble') {
+        setTimeout(() => {
+          this.bubbleSort();
+        }, 0)
+      } else if (key === 'insertion') {
+        setTimeout(() => {
+          this.insertionSort();
+        }, 0)
+      } else if (key === 'quickSort') {
+        setTimeout(() => {
+          this.quickSort();
+        }, 0)
+      }
+    })
+  }
+
+
+  updateAll() {
+    if (this.numElements < 100 || this.numElements > 5001) {
 
       this.numElements = 100
     }
-    this.someDumData = Array.from(Array(this.numElements).keys()).map(value => this.getRndInteger(0, 10000))
+    this.someDumData = Array.from(Array(this.numElements).keys()).map(() => this.getRndInteger(0, 200000));
 
-    this.barChartData2 = [    { data: this.someDumData.map(value => this.getRndInteger(0, 10000)), label: 'Series B' }
-    ];
 
-    this.barChartLabels2 = this.someDumData.map(value => " ");
-
+    this.sortings.forEach(key => {
+      console.log(key);
+      this.charData[key] = {
+        comparisons: 0,
+        sortingName: key,
+        dataSet: [{
+          data: JSON.parse(JSON.stringify(this.someDumData)),
+          label: `${key}`
+        }],
+        labels: this.someDumData.map(() => " "),
+        options: {
+          animation: {
+            duration: 0
+          },
+          scales: {
+            yAxes: [{
+              ticks: {
+                beginAtZero: true
+              }
+            }]
+          },
+          responsive: true,
+        },
+        plugins: [],
+        legend: true,
+        chartType: 'bar',
+        finished: true
+      }
+    });
   }
 
-  bubbleSort(){
-    this.updateAll();
-    this.show = false;
-    this.comparision = 0;
-    let newDta = this.barChartData2[0].data;
+  insertionSort() {
+    let newDta = this.charData['insertion'].dataSet[0].data;
     let j;
-    for (let i = 0; i < newDta.length; i++){
+    for (let i = 0; i < newDta.length; i++) {
+      setTimeout(() => {
+        let j = i;
+        while (j > 0) {
+          this.charData['insertion'].comparisons += 1;
+          if (newDta[j] < newDta[j - 1]) {
+            let t = newDta[j - 1];
+            newDta[j - 1] = newDta[j];
+            newDta[j] = t;
+          }
+          j -= 1;
+        }
+        if (i == newDta.length - 1) {
+          this.charData['insertion'].finished = true;
+        }
+        this.charData['insertion'].dataSet = [
+          {data: newDta, label: newDta.sortingName}
+        ];
+      // }, i * Math.ceil(this.numElements / 10))
+      }, 10)
+    }
+  }
+
+  bubbleSort() {
+    let newDta = this.charData['bubble'].dataSet[0].data;
+    let j;
+    for (let i = 0; i < newDta.length; i++) {
       setTimeout(() => {
         for (j = 0; j < newDta.length; j++) {
-          this.comparision += 1;
-          if(newDta[j] > newDta[i]){
+          this.charData['bubble'].comparisons += 1;
+          if (newDta[j] > newDta[i]) {
             let t = newDta[i];
             newDta[i] = newDta[j];
             newDta[j] = t;
           }
         }
-        if(i == newDta.length - 1 && j == newDta.length){
-          this.show = true;
+        if (i == newDta.length - 1 && j == newDta.length) {
+          this.charData['bubble'].finished = true;
         }
-        this.barChartData2 =  [
-          { data: newDta, label: 'Series B' }
+        this.charData['bubble'].dataSet = [
+          {data: newDta, label: newDta.sortingName}
         ];
-      }, i * Math.abs(this.numElements / 10))
+      }, 10)
     }
   }
 
-  dummyData = [65, 59, 80, 81, 56, 55, 40];
+  quickSort() {
+    let newDta = this.charData['quickSort'].dataSet[0].data.slice(0, 99);
+    console.log(newDta.filter(value => value === 0).length)
+    this.quick_sort_helper(0, newDta.length - 1, newDta);
+    console.log(newDta.filter(value => value === 0).length)
+    console.log(newDta)
+    this.charData['quickSort'].labels = this.someDumData.map(() => " ").slice(0,99);
+    this.charData['quickSort'].dataSet = [{data : newDta , label : "insertionSort"}];
+  }
 
-  sortings = ["insertion", "bubble"];
 
-  charData = {};
+  quick_sort_helper(l: number, h: number, lis: number[]) {
 
-  barChartOptions = {
-    scaleShowVerticalLines: false,
-    responsive: true,
-    scales: {
-      yAxes: [{
-        ticks: {
-          beginAtZero: true
-        }
-      }]
+    if (l < h) {
+      let j = this.partition(l, h, lis);
+      this.quick_sort_helper(l, j, lis);
+      this.quick_sort_helper(j + 1, h, lis)
     }
-  };
-  barChartLegends = true;
-  barChartType = 'bar';
+  }
 
+  partition(l: number, h: number, lis: number[]) {
+    let pivot = lis[l];
+    let i = l;
+    let j = h;
+    while (i < j) {
+      while (lis[i] <= pivot) {
+        i += 1
+      }
+      while (lis[j] > pivot) {
+        j -= 1
+      }
+      if (i < j) {
+        let t = lis[i];
+        lis[i] = lis[j]
+        lis[j] = t
+      }
+    }
 
-  constructor() { }
+    let t = lis[l];
+    lis[l] = lis[j]
+    lis[j] = t
+    return j
 
+  }
+
+  constructor() {
+  }
 
 
   ngOnInit() {
-    this.sortings.forEach(key => {
-      this.charData[key] = {
-        labels : this.barChartLabels2,
-        data : [{
-          data : [65, 59, 80, 81, 56, 55, 40],
-          label: `${key} Sort`,
-          barPercentage: 0.5,
-          barThickness: 6,
-          maxBarThickness: 8,
-          minBarLength: 2,
-          backgroundColor: '#04aefb',
-          hoverBackgroundColor: '#05aefbb8'
-        }],
-      }
-    });
-
-    console.log(this.charData);
-
+    this.updateAll();
   }
 
 }
