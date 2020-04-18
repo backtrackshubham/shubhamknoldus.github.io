@@ -1,4 +1,5 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {BaseChartDirective} from 'ng2-charts/ng2-charts';
 
 @Component({
   selector: 'app-sortings',
@@ -7,7 +8,7 @@ import {Component, OnInit} from '@angular/core';
 })
 export class SortingsComponent implements OnInit {
 
-
+  @ViewChild(BaseChartDirective) chart: BaseChartDirective;
   sortings = ['bubble', 'insertion', 'quickSort'];
 
   charData = {};
@@ -34,24 +35,24 @@ export class SortingsComponent implements OnInit {
       if (key === 'bubble') {
         setTimeout(() => {
           this.bubbleSort();
-        }, 0)
+        }, 0);
       } else if (key === 'insertion') {
         setTimeout(() => {
           this.insertionSort();
-        }, 0)
+        }, 0);
       } else if (key === 'quickSort') {
         setTimeout(() => {
           this.quickSort();
-        }, 0)
+        }, 0);
       }
-    })
+    });
   }
 
 
   updateAll() {
     if (this.numElements < 100 || this.numElements > 5001) {
 
-      this.numElements = 100
+      this.numElements = 100;
     }
     this.someDumData = Array.from(Array(this.numElements).keys()).map(() => this.getRndInteger(0, 200000));
 
@@ -65,7 +66,7 @@ export class SortingsComponent implements OnInit {
           data: JSON.parse(JSON.stringify(this.someDumData)),
           label: `${key}`
         }],
-        labels: this.someDumData.map(() => " "),
+        labels: this.someDumData.map(() => ' '),
         options: {
           animation: {
             duration: 0
@@ -83,12 +84,12 @@ export class SortingsComponent implements OnInit {
         legend: true,
         chartType: 'bar',
         finished: true
-      }
+      };
     });
   }
 
   insertionSort() {
-    let newDta = this.charData['insertion'].dataSet[0].data;
+    const newDta = this.charData['insertion'].dataSet[0].data;
     let j;
     for (let i = 0; i < newDta.length; i++) {
       setTimeout(() => {
@@ -102,26 +103,26 @@ export class SortingsComponent implements OnInit {
           }
           j -= 1;
         }
-        if (i == newDta.length - 1) {
+        if (i === newDta.length - 1) {
           this.charData['insertion'].finished = true;
         }
-        this.charData['insertion'].dataSet = [
-          {data: newDta, label: newDta.sortingName}
-        ];
+        // this.charData['insertion'].dataSet = [
+        //   {data: newDta, label: newDta.sortingName}
+        // ];
       // }, i * Math.ceil(this.numElements / 10))
-      }, 10)
+      }, 10);
     }
   }
 
   bubbleSort() {
-    let newDta = this.charData['bubble'].dataSet[0].data;
+    const newDta = this.charData['bubble'].dataSet[0].data;
     let j;
     for (let i = 0; i < newDta.length; i++) {
       setTimeout(() => {
         for (j = 0; j < newDta.length; j++) {
           this.charData['bubble'].comparisons += 1;
           if (newDta[j] > newDta[i]) {
-            let t = newDta[i];
+            const t = newDta[i];
             newDta[i] = newDta[j];
             newDta[j] = t;
           }
@@ -132,52 +133,49 @@ export class SortingsComponent implements OnInit {
         this.charData['bubble'].dataSet = [
           {data: newDta, label: newDta.sortingName}
         ];
-      }, 10)
+      }, 10);
     }
   }
 
   quickSort() {
-    let newDta = this.charData['quickSort'].dataSet[0].data.slice(0, 99);
-    console.log(newDta.filter(value => value === 0).length)
+    const newDta = this.charData['quickSort'].dataSet[0].data.slice(0, 99);
     this.quick_sort_helper(0, newDta.length - 1, newDta);
-    console.log(newDta.filter(value => value === 0).length)
-    console.log(newDta)
-    this.charData['quickSort'].labels = this.someDumData.map(() => " ").slice(0,99);
-    this.charData['quickSort'].dataSet = [{data : newDta , label : "insertionSort"}];
+    this.charData['quickSort'].labels = this.someDumData.map(() => ' ').slice(0, 99);
+    this.charData['quickSort'].dataSet = [{data : newDta , label : 'insertionSort'}];
   }
 
 
   quick_sort_helper(l: number, h: number, lis: number[]) {
 
     if (l < h) {
-      let j = this.partition(l, h, lis);
+      const j = this.partition(l, h, lis);
       this.quick_sort_helper(l, j, lis);
-      this.quick_sort_helper(j + 1, h, lis)
+      this.quick_sort_helper(j + 1, h, lis);
     }
   }
 
   partition(l: number, h: number, lis: number[]) {
-    let pivot = lis[l];
+    const pivot = lis[l];
     let i = l;
     let j = h;
     while (i < j) {
       while (lis[i] <= pivot) {
-        i += 1
+        i += 1;
       }
       while (lis[j] > pivot) {
-        j -= 1
+        j -= 1;
       }
       if (i < j) {
-        let t = lis[i];
-        lis[i] = lis[j]
-        lis[j] = t
+        const t = lis[i];
+        lis[i] = lis[j];
+        lis[j] = t;
       }
     }
 
-    let t = lis[l];
-    lis[l] = lis[j]
-    lis[j] = t
-    return j
+    const t = lis[l];
+    lis[l] = lis[j];
+    lis[j] = t;
+    return j;
 
   }
 
