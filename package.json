@@ -8,7 +8,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "deploy": "gh-pages -d dist/dev-folio --branch master"
+    "deploy": "ng build --prod && gh-pages -d dist/dev-folio --branch master"
   },
   "homepage": "https://shuhamknoldus.github.io",
   "private": true,
