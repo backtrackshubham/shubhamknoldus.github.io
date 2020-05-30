@@ -1,4 +1,13 @@
 <div class="container-fluid">
-  <app-sortings></app-sortings>
+  <div class="row">
+    <div class="col-md-12">
+      <ul class="nav">
+        <li class="nav-item" ><a class="nav-link" routerLink="/bubble">Bubble</a></li>
+        <li class="nav-item" ><a class="nav-link" routerLink="/insertion">Insertion</a></li>
+        <li class="nav-item" ><a class="nav-link" routerLink="/quick">Quick</a></li>
+      </ul>
+      <router-outlet></router-outlet>
+    </div>
+  </div>
 </div>
-<!--<a routerLink="/sortings">Go to sortings</a>-->
+

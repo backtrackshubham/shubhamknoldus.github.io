@@ -8,5 +8,5 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'dev-folio';
 
-  name = "shubham";
+  name = 'shubham';
 }

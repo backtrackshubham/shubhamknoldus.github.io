@@ -1,16 +1,28 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import {AppComponent} from "./app.component";
-import {SortingsComponent} from "./sortings/sortings.component";
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {BubbleSortComponent} from './sorting-seggregated/bubblesort/bubble-sort.component';
+import {InsertionSortComponent} from './sorting-seggregated/insertionsort/insertion-sort.component';
+import {QuicksortComponent} from './sorting-seggregated/quicksort/quicksort.component';
 
 
-const routes: Routes = [
-  {path: '', component: AppComponent},
-  {path: 'sortings', component: SortingsComponent}
+const appRoutes: Routes = [
+  // children: [
+  {
+    path: 'bubble',
+    component: BubbleSortComponent
+  }, {
+    path: 'insertion',
+    component: InsertionSortComponent
+  }, {
+    path: 'quick',
+    component: QuicksortComponent
+  }
+  // ]
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(appRoutes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}

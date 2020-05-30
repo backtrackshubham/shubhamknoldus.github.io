@@ -1,16 +1,20 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import {FormsModule} from "@angular/forms";
-import { SortingsComponent } from './sortings/sortings.component';
-import {ChartsModule} from "ng2-charts";
+import {AppRoutingModule} from './app-routing.module';
+import {AppComponent} from './app.component';
+import {FormsModule} from '@angular/forms';
+import {ChartsModule} from 'ng2-charts';
+import {InsertionSortComponent} from './sorting-seggregated/insertionsort/insertion-sort.component';
+import {BubbleSortComponent} from './sorting-seggregated/bubblesort/bubble-sort.component';
+import {QuicksortComponent} from './sorting-seggregated/quicksort/quicksort.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    SortingsComponent
+    InsertionSortComponent,
+    BubbleSortComponent,
+    QuicksortComponent
   ],
   imports: [
     BrowserModule,
@@ -21,4 +25,5 @@ import {ChartsModule} from "ng2-charts";
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
