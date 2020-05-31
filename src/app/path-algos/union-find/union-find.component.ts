@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {arrayToMatrix, getDummyData} from '../../utills/generic';
 import {Cell, PathFinderResult} from '../../models/models';
 import {Subscription} from 'rxjs';
@@ -9,7 +9,7 @@ import {getObservable, unsubscribeObservable} from '../../utills/observable';
   templateUrl: './union-find.component.html',
   styleUrls: ['./union-find.component.css']
 })
-export class UnionFindComponent implements OnInit {
+export class UnionFindComponent implements OnInit, OnDestroy {
 
   gridSize = 10;
   nums: Cell<number>[][];
@@ -17,7 +17,8 @@ export class UnionFindComponent implements OnInit {
   dp: number[][] = [];
   path = '';
   pathCompSub: Subscription;
-  isFinished: boolean = false;
+  isFinished = false;
+
   // dp: Map<string, number> = new Map<string, number>();
 
   constructor() {
@@ -39,8 +40,8 @@ export class UnionFindComponent implements OnInit {
     this.isFinished = true;
     // this.answer = this.findMinPath(this.nums, 0, 0, 0, '');
     const res = this.processDp();
-    let m = this.dp.length;
-    let n = this.dp[0].length;
+    const m = this.dp.length;
+    const n = this.dp[0].length;
     let i = 0;
     let j = 0;
     this.pathCompSub = getObservable(1000, 100, i !== m && j !== n)
@@ -76,6 +77,8 @@ export class UnionFindComponent implements OnInit {
             this.isFinished = false;
           }
         }
+      }, error => {
+        unsubscribeObservable(this.pathCompSub);
       });
 
     this.answer = {cost: res, col: 0, row: 5, minWeightPath: ''};
@@ -129,5 +132,11 @@ export class UnionFindComponent implements OnInit {
       .map(re => {
         return {row: re[0], column: re[1]};
       });
+  }
+
+  ngOnDestroy(): void {
+    if (this.pathCompSub) {
+      unsubscribeObservable(this.pathCompSub);
+    }
   }
 }
