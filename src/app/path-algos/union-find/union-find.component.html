@@ -1,25 +1,26 @@
 Input Grid Size
 <input type="number"
+       [disabled]="isFinished"
        [(ngModel)]="gridSize"
        (change)="updateGrid()"
 >
- | <button (click)="startVisualization()">Find path with minimum weight from 0 , 0 to  {{gridSize - 1}}, {{gridSize - 1}}</button>
- <span *ngIf="answer"> | Minimum Weight is {{answer.cost}}</span><br>
-<span *ngIf="answer">And path is  {{answer.minWeightPath}}</span>
+|
+<button [disabled]="isFinished" (click)="startVisualization()">Find path with minimum weight from 0 , 0 to  {{gridSize - 1}}
+  , {{gridSize - 1}}</button>
+<span *ngIf="answer"> | Minimum Weight is {{answer.cost}}</span><br>
+<span *ngIf="answer">And path is  {{path}}</span>
 <hr>
 <div class="row">
   <div class="col-md-12" style="display: flex; align-items: center; justify-content: center">
-    <table *ngIf="nums && nums.length > 0" style="text-align: center; border: solid; margin: 2%; overflow-scrolling: auto" >
+    <table *ngIf="nums && nums.length > 0"
+           style="text-align: center; border: solid; margin: 2%; overflow-scrolling: auto">
       <tr *ngFor="let row of nums">
-        <td *ngFor="let elem of row" [ngStyle]="elem.backgroundColour">{{elem.value}}</td>
+        <td *ngFor="let elem of row" [ngStyle]="elem.backgroundColour">
+          {{elem.value}}
+          <span *ngIf="elem.showRightArrow" class="glyphicon glyphicon-arrow-right"></span>
+          <span *ngIf="elem.showDownArrow" class="glyphicon glyphicon-arrow-down"></span>
+          </td>
       </tr>
     </table>
-  </div>
-  <div class="col-md-12" *ngIf="nums && nums.length > 0">
-    <div *ngFor="let row of nums">
-      <span *ngFor="let elem of row" [ngStyle]="elem.backgroundColour">
-        {{elem.value}}
-      </span>
-    </div>
   </div>
 </div>

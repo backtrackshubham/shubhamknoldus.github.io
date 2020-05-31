@@ -12,7 +12,7 @@ export function arrayToMatrix(num: number[], gridSize: number): Cell<number>[][]
   for (let i = 0; i < num.length; i += gridSize) {
     const a = [];
     for (let j = 0; j < gridSize; j++) {
-      a.push({row : r, col : j, value : num[j + i], backgroundColour : {color : 'red'}});
+      a.push({row : r, col : j, value : num[j + i], backgroundColour : {color : 'red'}, showDownArrow: false, showRightArrow: false});
     }
     toRet.push(a);
     r++;

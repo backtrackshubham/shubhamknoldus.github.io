@@ -3,6 +3,8 @@ export interface Cell<T> {
   col: number;
   value: T;
   backgroundColour: CellColour;
+  showRightArrow: boolean;
+  showDownArrow: boolean;
 }
 
 export interface CellColour {
@@ -12,4 +14,6 @@ export interface CellColour {
 export interface PathFinderResult {
   cost: number;
   minWeightPath: string;
+  row: number;
+  col: number;
 }

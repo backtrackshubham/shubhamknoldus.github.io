@@ -18,7 +18,7 @@ const appRoutes: Routes = [
     path: 'quick',
     component: QuicksortComponent
   }, {
-    path: 'union-find',
+    path: 'min-path-finder',
     component: UnionFindComponent
   }
   // ]

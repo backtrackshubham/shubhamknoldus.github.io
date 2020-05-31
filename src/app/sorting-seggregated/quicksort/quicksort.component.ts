@@ -48,7 +48,6 @@ export class QuicksortComponent implements OnInit {
   }
 
   updateRandomData() {
-    console.log(this.numElements);
     const data = getDummyData(this.numElements, 10000);
     this.charData.dataSet[0].data = data;
     this.charData.labels = data.map(_ => ' ');
@@ -85,7 +84,6 @@ export class QuicksortComponent implements OnInit {
   }
 
   quick() {
-    console.log(this.charData.dataSet[0].data);
     this.quickSortNew(this.charData.dataSet[0].data, 0, this.lastIndex - 1);
   }
 
