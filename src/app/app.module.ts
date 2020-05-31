@@ -8,13 +8,15 @@ import {ChartsModule} from 'ng2-charts';
 import {InsertionSortComponent} from './sorting-seggregated/insertionsort/insertion-sort.component';
 import {BubbleSortComponent} from './sorting-seggregated/bubblesort/bubble-sort.component';
 import {QuicksortComponent} from './sorting-seggregated/quicksort/quicksort.component';
+import { UnionFindComponent } from './path-algos/union-find/union-find.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     InsertionSortComponent,
     BubbleSortComponent,
-    QuicksortComponent
+    QuicksortComponent,
+    UnionFindComponent
   ],
   imports: [
     BrowserModule,

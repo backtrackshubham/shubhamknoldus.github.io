@@ -3,6 +3,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {BubbleSortComponent} from './sorting-seggregated/bubblesort/bubble-sort.component';
 import {InsertionSortComponent} from './sorting-seggregated/insertionsort/insertion-sort.component';
 import {QuicksortComponent} from './sorting-seggregated/quicksort/quicksort.component';
+import {UnionFindComponent} from './path-algos/union-find/union-find.component';
 
 
 const appRoutes: Routes = [
@@ -16,6 +17,9 @@ const appRoutes: Routes = [
   }, {
     path: 'quick',
     component: QuicksortComponent
+  }, {
+    path: 'union-find',
+    component: UnionFindComponent
   }
   // ]
 ];

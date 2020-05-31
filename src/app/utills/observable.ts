@@ -7,6 +7,6 @@ export function getObservable(dueTime: number, period: number, predicate: boolea
 }
 
 export function unsubscribeObservable(subscription: Subscription) {
-  console.log("Unsubscribe called")
+  console.log('Unsubscribe called');
   subscription.unsubscribe();
 }

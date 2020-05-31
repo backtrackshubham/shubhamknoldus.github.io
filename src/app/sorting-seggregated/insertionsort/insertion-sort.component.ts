@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from 'rxjs';
-import {getDummyData} from '../utills/generic';
-import {getObservable, unsubscribeObservable} from '../utills/observable';
+import {getDummyData} from '../../utills/generic';
+import {getObservable, unsubscribeObservable} from '../../utills/observable';
 
 @Component({
   selector: 'app-insertionsort',
@@ -11,7 +11,7 @@ import {getObservable, unsubscribeObservable} from '../utills/observable';
 export class InsertionSortComponent implements OnInit, OnDestroy {
   insertionSortObservable: Subscription;
   numElements = 100;
-  dataToSort = getDummyData(this.numElements);
+  dataToSort = getDummyData(this.numElements, 10000);
   currentIndex = 0;
   lastIndex = this.dataToSort.length;
   charData = {
@@ -49,7 +49,7 @@ export class InsertionSortComponent implements OnInit, OnDestroy {
 
   updateRandomData() {
     console.log(this.numElements);
-    const data = getDummyData(this.numElements);
+    const data = getDummyData(this.numElements, 10000);
     this.charData.dataSet[0].data = data;
     this.charData.labels = data.map(_ => ' ');
     this.lastIndex = data.length;

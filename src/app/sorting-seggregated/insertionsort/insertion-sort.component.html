@@ -7,7 +7,7 @@
     placeholder="Number of elements"
     type="number"
     [(ngModel)]="numElements"
-    (change)="updateRandomData()">
+    (change)="updateRandomData()"> |
   <button [disabled]="!charData.finished" (click)="insertionSort()">Sort</button>
   <canvas width="100%" height="25%"
           [datasets]="charData.dataSet"
