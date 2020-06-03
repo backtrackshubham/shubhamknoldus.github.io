@@ -50,11 +50,13 @@ export class UnionFindComponent implements OnInit, OnDestroy {
           if (this.dp[i][j + 1] < this.dp[i + 1][j]) {
             this.nums[i][j].showRightArrow = true;
             this.nums[i][j].backgroundColour.color = 'green';
+            this.nums[i][j].backgroundColour.background = 'aqua';
             this.path += `${this.nums[i][j].value}-->`;
             j += 1;
           } else {
             this.nums[i][j].showDownArrow = true;
             this.nums[i][j].backgroundColour.color = 'green';
+            this.nums[i][j].backgroundColour.background = 'aqua';
             this.path += `${this.nums[i][j].value}-->`;
             i += 1;
           }
@@ -62,17 +64,20 @@ export class UnionFindComponent implements OnInit, OnDestroy {
           if (i < m - 1) {
             this.nums[i][j].showDownArrow = true;
             this.nums[i][j].backgroundColour.color = 'green';
+            this.nums[i][j].backgroundColour.background = 'aqua';
             this.path += `${this.nums[i][j].value}-->`;
             i += 1;
           } else if (j < n - 1) {
             this.nums[i][j].showRightArrow = true;
             this.nums[i][j].backgroundColour.color = 'green';
+            this.nums[i][j].backgroundColour.background = 'aqua';
             this.path += `${this.nums[i][j].value}-->`;
             j += 1;
           } else {
             i = m;
             j = n;
-            this.nums[m - 1][n - 1].backgroundColour.color = 'green';
+            this.nums[m - 1][n - 1].backgroundColour.color = 'white';
+            this.nums[m - 1][n - 1].backgroundColour.background = 'green';
             unsubscribeObservable(this.pathCompSub);
             this.isFinished = false;
           }

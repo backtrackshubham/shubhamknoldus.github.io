@@ -9,6 +9,7 @@ export interface Cell<T> {
 
 export interface CellColour {
   color: string;
+  background?: string;
 }
 
 export interface PathFinderResult {

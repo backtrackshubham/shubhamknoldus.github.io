@@ -83,7 +83,7 @@ export class QuicksortComponent implements OnInit {
       }
     }
     return new Observable(subscriber => {
-      setTimeout(() => subscriber.next(i), 500);
+      setTimeout(() => subscriber.next(i), 10);
     });
   }
 
